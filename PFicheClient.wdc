@@ -1,0 +1,123 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : PFicheClient
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x14329d7d000849ba
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      PFicheClient est une Classe
+      	
+      protege
+      	
+      	m_clClientCourant est un mclient <associe>	// modèle associé à cette présentation (toujours en phase avec l'interface)
+      	m_pclClientSource est un MClient dynamique	// modèle source (avant modification) associé à cette présentation
+      	
+      	m_pValidation est une procédure	// Procédure à exécuter en validation d'un enregistrement
+      	
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1455398789791173050
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(pclClient est un mclient dynamique, pValidation est une procédure = null)
+      
+      // Mémorise le client d'origine
+      m_pclClientSource <- pclClient
+      // Définit le client courant
+      m_clClientCourant <= m_pclClientSource
+      // Mémorise la procédure de validation
+      m_pValidation = pValidation
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1455398789791238586
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : ValideModification
+     procedure_id : 1455402728276838666
+     type_code : 12
+     code : |1-
+      // Résumé : Valide les modifications de la fiche client
+      // Syntaxe :
+      //[ <Résultat> = ] ValideModification ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	booléen : Vrai si la modification est effective, Faux autrement
+      //
+      PROCEDURE ValideModification()
+      
+      clErreur est un CGestionErreur
+      clMémorise	est un mclient
+      
+      // Mémorise le client source
+      clMémorise <= m_pclClientSource
+      
+      // Définit le client source
+      m_pclClientSource <= m_clClientCourant
+      
+      // Enregistre le client
+      si m_pclClientSource.bEnregistrer(clErreur) = faux alors
+      	ErreurDéclenche(1, clErreur.FormateMessage())
+      	// Repositionne le source
+      	m_pclClientSource <= clMémorise
+      	RENVOYER Faux
+      FIN
+      
+      // Exécute la procédure de validation si elle est définie
+      si m_pValidation <> null alors m_pValidation(m_pclClientSource)
+      
+      renvoyer vrai
+     type : 458752
+   -
+     name : ListeCommandes
+     procedure_id : 1458655259804286214
+     type_code : 12
+     code : |1-
+      // Résumé : Renvoie la liste des commandes du client
+      // Syntaxe :
+      //[ <Résultat> = ] ListeCommandes ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	PTableCommande : Tableau de commandes du client
+      //
+      PROCEDURE ListeCommandes() : PTableCommande
+      
+      // Charge les commandes du client
+      clTabCommandes est un MTableauDeCommandes(m_clClientCourant)
+      clTabCommandes.Charger()
+      
+      clPresentationCommande est un PTableCommande(clTabCommandes)
+      
+      renvoyer clPresentationCommande
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970dc26a77
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

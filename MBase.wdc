@@ -1,0 +1,267 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MBase
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x144782b201125814
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      // Classe modèle de base
+      MBase est une Classe
+      	
+      	m_bNouveau		est un booleen	// Vrai s'il s'agit d'un nouvel élément, Faux autrement
+      	m_vID			est un variant	// Identifiant de l'enregistrement
+      	
+      	m_sNomFichier	est une chaîne	// Nom du fichier associé au modèle
+      	m_sNomCléUnique	est une chaine	// Nom de la rubrique clé unique du fichier
+      	
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1461280305138849827
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(sNomFichier est une chaine, sNomIDAuto est une chaine)
+      
+      // Il s'agit d'un nouvel élément
+      m_bNouveau = Vrai
+      
+      // Mémorise les informations du fichier
+      m_sNomFichier = sNomFichier
+      m_sNomCléUnique = sNomIDAuto
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1461280305138915363
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : Charger
+     procedure_id : 1461280360973569278
+     type_code : 12
+     code : |1+
+      // Résumé : Charge les informations du modèle
+      // Syntaxe :
+      // Charger ( [<sdSource> est chaîne])
+      //
+      // Paramètres :
+      //	sdSource (chaîne ANSI) : Source à utiliser, chaîne vide ("") pour utiliser le fichier associé au modèle
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Charger(sdSource est une chaine = "")
+      
+      // Il ne s'agit pas d'un nouvel élément
+      m_bNouveau = Faux
+      
+      // Si la source n'est pas renseignée
+      si sdSource = "" alors
+      	// Récupère l'identifiant à partir du fichier associé au modèle
+      	m_vID = {m_sNomFichier+"."+m_sNomCléUnique, indRubrique}
+      sinon
+      	// Récupère l'identifiant à partir de la source passée en paramètre
+      	m_vID = {sdSource+"."+m_sNomCléUnique, indRubrique}
+      fin
+      
+      // Charge l'enregistrement en mémoire
+      FichierVersMémoire(sdSource)
+     type : 458752
+   -
+     name : bEnregistrer
+     procedure_id : 1461280403923317431
+     type_code : 12
+     code : |1-
+      // Résumé : Sauvegarde l'enregistrement en base
+      // Syntaxe :
+      // [ <Résultat> = ] bEnregistrer (<clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si l'enregistrement est effectif, Faux autrement
+      //
+      PROCEDURE bEnregistrer(clErreur est un CGestionErreur) : booleen
+      
+      // S'il s'agit d'un nouvel enregistrement
+      SI bNouveau() ALORS
+      	
+      	// Remise à zéro
+      	HRAZ(m_sNomFichier)
+      	// Initialise les rubriques à partir des membre
+      	MémoireVersFichier()
+      	// Ajoute l'enregistrement
+      	HAjoute(m_sNomFichier)
+      	// Si une erreur est détectée, il faut la mémoriser
+      	SI ErreurDétectée() ALORS
+      		clErreur.Initialise(CGestionErreur::ErreurHFSQL, HErreurInfo())
+      	SINON
+      		// Mémorise l'identifiant de l'enregistrement
+      		m_vID = {m_sNomFichier+"."+m_sNomCléUnique, indRubrique}
+      		// L'élément en cours n'est plus un nouvel élément
+      		m_bNouveau = Faux		
+      	FIN
+      	
+      SINON
+      	
+      	// Recherche l'enregistrement
+      	HLitRecherchePremier(m_sNomFichier, m_sNomCléUnique, m_vID)
+      	SI HTrouve(m_sNomFichier) ALORS
+      		// Initialise les rubriques à partir des membre
+      		MémoireVersFichier()
+      		// Modifie l'enregistrement
+      		HModifie(m_sNomFichier)
+      		// Si une erreur est détectée, il faut la mémoriser
+      		si ErreurDétectée() alors clErreur.Initialise(CGestionErreur::ErreurHFSQL, HErreurInfo())
+      	SINON
+      		// L'enregistrement n'a pas été trouvé
+      		clErreur.Initialise(CGestionErreur::NonTrouvé)
+      	FIN
+      	
+      FIN
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+      
+      // Renvoie Vrai si aucune erreur n'a été détectée
+      renvoyer (clErreur.code = CGestionErreur.Aucune)
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1461280429693192680
+     type_code : 12
+     code : |1-
+      // Résumé : Supprime l'enregistrement en cours
+      // Syntaxe :
+      // [ <Résultat> = ] bSupprimer (<clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clErreur (CGestionErreur) :  Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si la suppression est effective, Faux autrement
+      //
+      PROCEDURE bSupprimer(clErreur est un CGestionErreur) : booleen
+      
+      // S'il s'agit d'un nouvel élément, la suppression n'a pas lieu d'être
+      SI bNouveau() ALORS renvoyer vrai
+      
+      // Recherche l'enregistrement
+      HLitRecherchePremier(m_sNomFichier, m_sNomCléUnique, m_vID)
+      SI HTrouve(m_sNomFichier) ALORS
+      	// Supprime l'enregistrement
+      	HSupprime(m_sNomFichier)
+      	// Si une erreur est détectée, il faut la mémoriser
+      	SI ErreurDétectée() ALORS clErreur.Initialise(CGestionErreur::ErreurHFSQL, HErreurInfo())
+      SINON
+      	// L'enregistrement n'a pas été trouvé
+      	clErreur.Initialise(CGestionErreur::NonTrouvé)
+      FIN
+      
+      // Renvoie Vrai si aucune erreur n'a été détectée
+      RENVOYER (clErreur.code = CGestionErreur.Aucune)
+     type : 458752
+   -
+     name : bNouveau
+     procedure_id : 1461290157794155177
+     type_code : 12
+     code : |1+
+      // Résumé : Indique si l'élément en cours est un nouvel élément ou non
+      // Syntaxe :
+      // [ <Résultat> = ] bNouveau ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	booléen : Vrai s'il s'agit d'un nouvel élément, Faux autrement
+      //
+      PROCEDURE bNouveau() : booleen
+      
+      RENVOYER m_bNouveau
+     type : 458752
+   -
+     name : Copier
+     procedure_id : 1461351635949373039
+     type_code : 12
+     code : |1+
+      // Résumé : Copie un élément modèle dans l'objet en cours
+      // Syntaxe :
+      // Copier (<pclBase> est MBase dynamique)
+      //
+      // Paramètres :
+      //	pclBase (MBase dynamique) : Objet modèle à recopier
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Copier(pclBase est un mbase dynamique)
+      
+      // Effectue une copie de l'élément initial dans l'objet en cours
+      objet <= pclBase
+     type : 458752
+   -
+     name : FichierVersMémoire
+     internal_properties : CAAAAAgAAABdatXcqqGhdA15vQdqjgz3bvhOPtOJgRWhg1PUaA2qyyswBtbmFUXIyYSqkTmHIeBkYFWY7lmDJkfZ5T3uf2CXO8rijDOZka4BXIHF1k8JdpNCjRjelyv1Fnezp8KPvxcTE6QskYMCtRugd/veQmb8OXFCzhMFv1UW77s9p5O/h+CQ6DQs+A8flvf0tRxYo3SXXh2zQwZTOrY5M2lcx10neYpl2xkNAddaM2hxG75qaDxhH646c4qSEN9OoqxKf+4FdX5NdSmki2gjWf3Hp/UqsWH3wQYXYUkUAZJCvSdiQEwYD7O09jzN
+     procedure_id : 1461366586761864059
+     type_code : 12
+     code : |1-
+      // Résumé : Initialise automatiquement les valeurs des membres avec les valeurs des rubriques de l'enregistrement
+      // Syntaxe :
+      // FichierVersMémoire ( [<sdSource> est chaîne])
+      //
+      // Paramètres :
+      //	sdSource (chaîne ANSI) : Source à utiliser, chaîne vide ("") pour utiliser le fichier associé au modèle
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE FichierVersMémoire(sdSource est une chaine = "")
+      
+      // Si la source n'est pas renseignée
+      si sdSource = "" alors
+      	// Charge l'objet à partir du fichier associé au modèle
+      	WL.FichierVersMémoire(objet, m_sNomFichier)
+      sinon
+      	// Charge l'objet à partir de la source passée en paramètre
+      	WL.FichierVersMémoire(objet, sdSource)
+      FIN
+     type : 458752
+   -
+     name : MémoireVersFichier
+     internal_properties : CAAAAAgAAABvGNs/t1Ofynv3N1UgHL5BrGZ8hNFjT5tnuV3qzsM0BfEmtIQsP1tGZzLkcDdFdUYKz7sEl4EZxpRl8pVs1fkhwHTglFUHJ+JNQOMDpK0t0BHw6XTsGUWZmpMtNZhdg8lVqTwcRw3UJfdUgdVIVAoeg3e20hgoyL7pMmAQMiAmRuvbje9ll7BYkWJpeL+xTqeKQepmGGmsf7UIHEAbHJyO6HH+UhIavO38BPfqgp7Y1bl+4BxKYyV97WzZZxj6z5KF9SoBQQ2cvxAbvUmb7yU+YVHr3XIjoTUseR7+cZ/SNKz4S5pmBE7f
+     procedure_id : 1461366629711546675
+     type_code : 12
+     code : |1-
+      // Résumé : Initialise automatiquement les rubriques de l'enregistrement avec la valeur des membres
+      // Syntaxe :
+      // MémoireVersFichier ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE VIRTUELLE MémoireVersFichier()
+      
+      WL.MémoireVersFichier(objet, m_sNomFichier)
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970dd36a87
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

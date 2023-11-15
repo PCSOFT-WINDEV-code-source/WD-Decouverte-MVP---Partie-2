@@ -1,0 +1,221 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : PTableCommande
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x143e266702024098
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1-
+      PTableCommande est une Classe
+      
+      protege
+      	m_pclCommandes est un MTableauDeCommandes dynamique <associé>	// modèle associé à cette présentation (toujours en phase avec l'interface)
+      	m_pclCommandeCourant est un mCommande dynamique					// commande en cours dans la table (sélectionnée)
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1458645553172005016
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(pclTabCommande est un MTableauDeCommandes dynamique)
+      
+      // Mémorise le tableau de commandes
+      m_pclCommandes = pclTabCommande
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1458645553172070552
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+     type : 655360
+   -
+     name : Nouveau
+     procedure_id : 1458645553172136088
+     type_code : 12
+     code : |1-
+      // Résumé : Définit une commande à ajouter
+      // Syntaxe :
+      // [ <Résultat> = ] Nouveau ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	PFicheCommande : Commande à ajouter
+      //
+      PROCEDURE Nouveau() : PFicheCommande
+      
+      clCommande	est un mCommande(m_pclClient)
+      clPFiche	est un PFicheCommande(clCommande, NotifAjout) // Si l'ajout est effectif, la procédure NotifAjout sera exécutée
+      
+      renvoyer clPFiche
+     type : 458752
+   -
+     name : Modifier
+     procedure_id : 1458645553172201624
+     type_code : 12
+     code : |1+
+      // Résumé : Définit la commande à modifier
+      // Syntaxe :
+      // [ <Résultat> = ] Modifier ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	PFicheCommande : Commande à modifier
+      //
+      PROCEDURE Modifier()
+      
+      clPFiche	est un PFicheCommande(m_pclCommandeCourant, NotifModif)	// Si la modification est effective, la procédure NotifModif sera exécutée
+      
+      renvoyer clPFiche
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1458645553172267160
+     type_code : 12
+     code : |1+
+      // Résumé : Supprime une commande
+      // Syntaxe :
+      //[ <Résultat> = ] bSupprimer (<clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si la commande est supprimée, Faux autrement
+      //
+      PROCEDURE bSupprimer(clErreur est un CGestionErreur) : booleen
+      
+      renvoyer m_pclCommandes.bsupprimer(Commandecourante, clErreur)
+     type : 458752
+   -
+     name : NotifAjout
+     procedure_id : 1458645553172398232
+     type_code : 12
+     code : |1-
+      // Résumé : Procédure appelée si l'ajout d'une commande est effectif
+      // Syntaxe :
+      // NotifAjout (<pclClient> est MClient dynamique)
+      //
+      // Paramètres :
+      //	pclCommande (mCommande dynamique) : Commande qui vient d'être ajoutée
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE NotifAjout(pclCommande est un mCommande dynamique)
+      
+      // Ajoute la commande au tableau
+      m_pclCommandes.Ajouter(pclCommande)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+   -
+     name : NotifModif
+     procedure_id : 1458645553172463768
+     type_code : 12
+     code : |1-
+      // Résumé :  Procédure appelée si la modification d'un client est effective
+      // Syntaxe :
+      // NotifModif (<pclClient> est MClient dynamique)
+      //
+      // Paramètres :
+      //	pclCommande (mCommande dynamique) : Commande qui vient d'être modifiée
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE NotifModif(pclCommande est un mCommande dynamique <utile>)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+   -
+     name : NuméroInterneCommandeCourant
+     procedure_id : 1471664793070366036
+     type_code : 12
+     code : |1+
+      // Résumé : Renvoie le numéro interne de la commande en cours
+      // Syntaxe :
+      //[ <Résultat> = ] NuméroInterneCommandeCourant ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sur 8 octets : Numéro interne de la commande en cours
+      //
+      PROCEDURE NuméroInterneCommandeCourant() : entier sur 8
+      
+      renvoyer m_pclCommandeCourant.m_nNuméroInterneCommande
+     type : 458752
+  properties :
+   -
+     name : CommandeCourante
+     identifier : 0x143e266702034098
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE PUBLIQUE CommandeCourante()
+         
+         // Renvoie la commande en cours
+         RENVOYER m_pclCommandeCourant
+        type : 1966080
+      -
+        code : |1-
+         PROCEDURE PUBLIQUE CommandeCourante(Valeur est MCommande dynamique)
+         
+         // Mémorise la commande en cours
+         m_pclCommandeCourant = Valeur
+        type : 2031616
+     template_refs : []
+   -
+     name : p_nTotalCommande
+     identifier : 0x143e266702044098
+     type_code : 103
+     p_codes :
+      -
+        code : |1+
+         PROCEDURE PUBLIQUE p_nTotalCommande()
+         
+         // Renvoie le nombre de commandes du tableau
+         renvoyer m_tabCommandes..occurrence
+        type : 1966080
+     template_refs : []
+   -
+     name : Titre
+     identifier : 0x1444e68702324c05
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE Titre()
+         
+         // Définit le titre de la présentation
+         renvoyer "Commandes de " + m_pclCommandes.m_pclClient.NomEnClair
+        type : 1966080
+      -
+        code : |1-
+         
+        type : 2031616
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970dfc6ab6
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

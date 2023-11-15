@@ -1,0 +1,164 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MTableauDeClients
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x1433a337001dab47
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      MTableauDeClients est une Classe
+      
+      public
+      	m_tabClients est un tableau de MClient dynamique	// Tableau de clients
+      
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1455686561191340871
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructeur()
+      
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1455686561191406407
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : Charger
+     procedure_id : 1455687106652314354
+     type_code : 12
+     code : |1+
+      // Résumé : Charge le tableau des clients
+      // Syntaxe :
+      // Charger ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Charger()
+      
+      // Vide le tableau
+      SupprimeTout(m_tabClients)
+      
+      // Exécute la requête
+      SI hexecuterequete(REQ_Clients) ALORS
+      
+      	// Parcourt la liste des clients	
+      	pour tout REQ_Clients
+      		
+      		// Charge le client dans un modèle
+      		clClient est un mclient
+      		clClient.Charger(REQ_Clients..nom)
+      		
+      		// Ajoute le client au tableau
+      		TableauAjoute(m_tabClients, clClient)
+      		
+      	FIN
+      	
+      FIn
+     type : 458752
+   -
+     name : Ajouter
+     procedure_id : 1458354448850617673
+     type_code : 12
+     code : |1+
+      // Résumé : Ajoute un client au tableau
+      // Syntaxe :
+      // Ajouter (<clClient> est MClient dynamique)
+      //
+      // Paramètres :
+      //	clClient (MClient dynamique) : Client à ajouter
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Ajouter(clClient est un mclient dynamique)
+      
+      // Ajoute le client
+      Ajoute(m_tabClients, clClient)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1458375489908754203
+     type_code : 12
+     code : |1-
+      // Résumé : Supprime un client
+      // Syntaxe :
+      // [ <Résultat> = ] bSupprimer (<clClient> est MClient dynamique, <clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clClient (MClient dynamique) : Client à supprimer du tableau
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si la suppression est effective, Faux autrement
+      //
+      PROCEDURE bSupprimer(clClient est un mclient dynamique, clErreur est un CGestionErreur) : booleen
+      
+      // Recherche le client dans le tableau
+      nPosition est un entier = Cherche(m_tabClients, tcLinéaire, clClient)
+      si nPosition = -1 alors
+      	// Client non trouvé
+      	clErreur.Initialise(CGestionErreur.NonTrouvé)
+      	renvoyer faux
+      FIN
+      
+      // Supprime le client
+      soit bClientSupprimé = clClient.bSupprimer(clErreur)
+      
+      // Supprime le client du tableau
+      si bClientSupprimé alors Supprime(m_tabClients, nPosition)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+      
+      renvoyer bClientSupprimé
+     type : 458752
+   -
+     name : Modifier
+     procedure_id : 1458384006834949043
+     type_code : 12
+     code : |1-
+      // Résumé : Modifie un client
+      // Syntaxe :
+      //Modifier (<pclClient> est MClient dynamique)
+      //
+      // Paramètres :
+      //	pclClient (MClient dynamique) : Client modifié
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Modifier(pclClient est un mclient dynamique <utile>)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970da26a58
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

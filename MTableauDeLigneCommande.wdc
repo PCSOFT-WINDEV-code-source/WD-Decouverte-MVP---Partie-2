@@ -1,0 +1,292 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MTableauDeLigneCommande
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x143e68f4057a39ff
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      MTableauDeLigneLigneCommande est une Classe
+      
+      public
+      	// Des lignes de commandes appartiennent à une commande
+      	m_pclCommande			est un MCommande dynamique	<faible>
+      
+      	// Liste des lignes de commandes
+      	m_tabLignesCommande		est un tableau de MLigneCommande dynamique
+      	// Liste des lignes supprimées
+      	m_tabLignesSupprimées	est un tableau de MLigneCommande dynamique
+      	
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1458718726587890175
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(pclCommande est un mCommande dynamique)
+      
+      // Mémorise la commande
+      m_pclCommande = pclCommande
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1458718726587955711
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : Ajouter
+     procedure_id : 1458718726588086783
+     type_code : 12
+     code : |1+
+      // Résumé : Ajoute une ligne de commande
+      // Syntaxe :
+      //Ajouter (<pclLigneCommande> est MLigneCommande dynamique)
+      //
+      // Paramètres :
+      //	pclLigneCommande (MLigneCommande dynamique) : Ligne de commande à ajouter
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Ajouter(pclLigneCommande est un mLigneCommande dynamique)
+      
+      // Ajoute la ligne de commande au tableau
+      Ajoute(m_tabLignesCommande, pclLigneCommande)
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1458718726588152319
+     type_code : 12
+     code : |1-
+      // Résumé : Supprime une ligne de commande du tableau
+      // Syntaxe :
+      //[ <Résultat> = ] bSupprimer (<pclLigneCommande> est MLigneCommande dynamique, <clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	pclLigneCommande (MLigneCommande dynamique) : Ligne de commande à supprimer
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si la suppression est effective, Faux autrement
+      //
+      PROCEDURE bSupprimer(pclLigneCommande est un mLigneCommande dynamique, clErreur est un CGestionErreur) : booleen
+      
+      // Cherche la ligne de commande dans le tableau
+      nPosition est un entier = Cherche(m_tabLignesCommande, tcLinéaire, pclLigneCommande)
+      si nPosition = -1 alors
+      	// La ligne de commande n'existe pas
+      	clErreur.Initialise(CGestionErreur.NonTrouvé)
+      	renvoyer faux
+      FIN
+      
+      // Ajoute la ligne de commande à la liste des lignes de commande supprimées
+      Ajoute(m_tabLignesSupprimées, pclLigneCommande)
+      // Supprime la ligne de commande de la liste courante
+      Supprime(m_tabLignesCommande, nPosition)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+      
+      // La suppression est effective
+      renvoyer vrai
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1458718726588152319
+     type_code : 12
+     code : |1+
+      // Supprime toutes les lignes de commandes
+      PROCEDURE bSupprimer(clErreur est un CGestionErreur)
+      
+      // Parcourt les lignes de commandes
+      POUR TOUT clLigne DE m_tabLignesCommande
+      	// Supprime la ligne de commande
+      	SI PAS clLigne.bSupprimer(clErreur) ALORS RENVOYER Faux
+      FIN
+      // Vide le tableau des lignes de commande
+      SupprimeTout(m_tabLignesCommande)
+      
+      // Parcourt les lignes de commandes supprimées
+      POUR TOUT clLigne DE m_tabLignesSupprimées
+      	// Supprime la ligne de commande
+      	SI PAS clLigne.bSupprimer(clErreur) ALORS RENVOYER Faux
+      FIN
+      // Vide le tableau des lignes de commande supprimées
+      SupprimeTout(m_tabLignesSupprimées)
+      
+      // La suppression est effective
+      renvoyer vrai
+     type : 458753
+   -
+     name : Modifier
+     procedure_id : 1458718726588217855
+     type_code : 12
+     code : |1-
+      // Résumé : Modifie une ligne de commande
+      // Syntaxe :
+      // Modifier (<pclLigneCommande> est MLigneCommande dynamique)
+      //
+      // Paramètres :
+      //	pclLigneCommande (MLigneCommande dynamique) : Ligne de commande à modifier
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Modifier(pclLigneCommande est un mLigneCommande dynamique <utile>)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+   -
+     name : Copier
+     procedure_id : 1458778508164438726
+     type_code : 12
+     code : |1+
+      // Résumé : Copie un tableau de commande dans le tableau en cours
+      // Syntaxe :
+      // Copier (<pclBase> est MBase dynamique)
+      //
+      // Paramètres :
+      //	pclTableauSource (MTableauDeLigneCommande dynamique) : Tableau de lignes de commande à recopier
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Copier(pclTableauSource est un MTableauDeLigneCommande dynamique)
+      
+      // Supprime le tableau des lignes de commande en cours
+      SupprimeTout(m_tabLignesCommande)
+      
+      // Parcours les lignes de commande de l'objet à copier
+      pour TOUT clLigneCmd DE pclTableauSource.m_tabLignesCommande
+      	// Recopie la ligne de commande
+      	clLigne est un MLigneCommande()
+      	clLigne <= cllignecmd
+      	clLigne.m_pclCommande = m_pclCommande
+      	// Ajoute la ligne de commande
+      	ajoute(m_tabLignesCommande, clLigne)
+      FIN
+      
+      // Parcours les lignes de commande supprimées de l'objet à copier
+      POUR TOUT clLigneCmd DE pclTableauSource.m_tabLignesSupprimées
+      	// Recopie la ligne de commande
+      	clLigne est un MLigneCommande()
+      	clLigne <= clLigneCmd
+      	clLigne.m_pclCommande = m_pclCommande
+      	// Ajoute la ligne de commande
+      	Ajoute(m_tabLignesSupprimées, clLigne)
+      FIN
+     type : 458752
+   -
+     name : Charger
+     procedure_id : 1458781433053183773
+     type_code : 12
+     code : |1+
+      // Résumé : Charge les lignes de commande
+      // Syntaxe :
+      // Charger ( [<sdSource> est chaîne])
+      //
+      // Paramètres :
+      // 	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Charger()
+      
+      // Vide le tableau des lignes de commande
+      SupprimeTout(m_tabLignesCommande)
+      
+      // Parcourt les enregistrement de ligne de commande de la commande
+      pour TOUT LigneCommande AVEC IDCommande = m_pclCommande.m_vID
+      	// Charge la ligne de commande
+      	clLigne est un MLigneCommande(m_pclCommande)
+      	clLigne.Charger()
+      	// Ajoute la ligne de commande au tableau
+      	Ajoute(m_tabLignesCommande, clLigne)
+      FIN
+     type : 458752
+   -
+     name : NouvelleLigne
+     procedure_id : 1459034131784156345
+     type_code : 12
+     code : |1+
+      // Résumé : Ajoute une nouvelle ligne de commande
+      // Syntaxe :
+      // NouvelleLigne (<pclProduit> est MProduit dynamique)
+      //
+      // Paramètres :
+      //	pclProduit (MProduit dynamique) : Objet produit définissant la ligne de commande
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE NouvelleLigne(pclProduit est un MProduit dynamique)
+      
+      // Nouvelle ligne de commande
+      clLigne est un MLigneCommande(m_pclCommande)
+      
+      // Mémorise les informations du produit
+      clLigne.m_sRéférence = pclProduit.m_sRéférence
+      clLigne.m_sLibellé = pclProduit.m_sLibellé
+      clLigne.m_moPrix = pclProduit.m_moprix
+      clLigne.m_nquantite = 1
+      clLigne.m_moTotal = clLigne.m_moPrix * clLigne.m_nQuantité
+      
+      // Ajoute la ligne de commande au tableau
+      Ajoute(m_tabLignesCommande, clLigne)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+   -
+     name : bEnregistrer
+     procedure_id : 1459065781487777374
+     type_code : 12
+     code : |1-
+      // Résumé : Sauvegarde l'enregistrement en base
+      // Syntaxe :
+      // [ <Résultat> = ] bEnregistrer (<clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si l'enregistrement est effectif, Faux autrement
+      //
+      PROCEDURE bEnregistrer(clErreur est un CGestionErreur) : booleen
+      
+      // Parcours les lignes de commande du tableau
+      pour TOUT clLigne DE m_tabLignesCommande
+      	// Enregistre la ligne de commande
+      	si pas clligne.benregistrer(clErreur) alors renvoyer faux
+      FIN
+      
+      // Parcours les lignes de commande supprimées
+      POUR TOUT clLigne DE m_tabLignesSupprimées
+      	// Supprime la ligne de commande
+      	si pas clLigne.bsupprimer(clErreur) alors renvoyer faux
+      FIN
+      // Vide le tableau des lignes supprimées
+      SupprimeTout(m_tabLignesSupprimées)
+      
+      // Enregistrement effectif
+      renvoyer vrai
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970e716b23
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

@@ -1,0 +1,194 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MTableauDeProduits
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x143f7b5900c1918f
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      MTableauDeProduits est une Classe
+      
+      public
+      	m_tabProduits est un tableau de MProduit dynamique	// Tableau de produits
+      
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1459020426486387087
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructeur()
+      
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1459020426486452623
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : Charge
+     procedure_id : 1459020426486518159
+     type_code : 12
+     code : |1+
+      // Résumé : Charge le tableau des produits
+      // Syntaxe :
+      // Charger ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Charge()
+      
+      // Vide le tableau
+      SupprimeTout(m_tabProduits)
+      
+      // Exécute la requête
+      SI HExécuteRequête(REQ_Produits) ALORS
+      	
+      	// Parcourt la liste des produits	
+      	POUR TOUT REQ_Produits
+      		
+      		// Charge le produit dans un modèle
+      		clProduit est un mProduit
+      		clProduit.Charger(REQ_Produits..Nom)
+      		
+      		// Ajoute le produit au tableau
+      		TableauAjoute(m_tabProduits, clProduit)
+      		
+      	FIN
+      	
+      FIN
+     type : 458752
+   -
+     name : Ajouter
+     procedure_id : 1459020426486583695
+     type_code : 12
+     code : |1+
+      // Résumé : Ajoute un produit au tableau
+      // Syntaxe :
+      //Ajouter (<pclProduit> est MProduit dynamique)
+      //
+      // Paramètres :
+      //	pclProduit (MProduit dynamique) : Produit à ajouter
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Ajouter(pclProduit est un mProduit dynamique)
+      
+      // Ajoute le produit au tableau
+      Ajoute(m_tabProduits, pclProduit)
+     type : 458752
+   -
+     name : Supprimer
+     procedure_id : 1459020426486649231
+     type_code : 12
+     code : |1-
+      // Résumé : Supprime un produit
+      // Syntaxe :
+      //[ <Résultat> = ] Supprimer (<pclProduit> est MProduit dynamique, <clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	pclProduit (MProduit dynamique) : Produit à supprimer du tableau
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si la suppression est effective, Faux autrement
+      //
+      PROCEDURE Supprimer(pclProduit est un mProduit dynamique, clErreur est un CGestionErreur) : booleen
+      
+      // Recherche le produit dans le tableau
+      nPosition est un entier = Cherche(m_tabProduits, tcLinéaire, pclProduit)
+      si nPosition=-1 alors
+      	// Produit non trouvé
+      	clErreur.Initialise(CGestionErreur.NonTrouvé)
+      	renvoyer faux
+      FIN
+      
+      // Supprime le produit
+      soit bProduitSupprimé = pclProduit.bSupprimer(clErreur)
+      
+      // Supprime le produit du tableau
+      si bProduitSupprimé alors Supprime(m_tabProduits, nPosition)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+      
+      renvoyer bProduitSupprimé
+     type : 458752
+   -
+     name : Modifier
+     procedure_id : 1459020426486714767
+     type_code : 12
+     code : |1-
+      // Résumé : Modifie un produit
+      // Syntaxe :
+      //Modifier (<pclProduit> est MProduit dynamique)
+      //
+      // Paramètres :
+      //	pclProduit (MProduit dynamique) : Produit à modifier
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Modifier(pclProduit est un mProduit dynamique <utile>)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+   -
+     name : Filtre
+     internal_properties : CAAAAAgAAAAfss/dFqMt7t7q64gJIem2XabJJfIyIBK7UJ4suQA+5c39qhusAx7ekDdH/gq9TFazO6e7LZPwH+f/+j9oYUvl6vz5MpIzI+x1b3i2MH+7viXsMPJI0Av15Qby4Q/BiEqxOtkmO+0qvfhX1lCYz5+vdbPGlEviEDJYPHe31DGa0uTgVWy0XyoIyi5E5630cFe1yHom9IKVWAvDdnxqih0D7rPrGPTND7HfUp2zeXaLMVqKKXCc8VhXGjWtGxGlHUu6WbRoA3s8AzLWqh6SuaK/MuUDwpMvD05XbF9igg==
+     procedure_id : 1459038306534954855
+     type_code : 12
+     code : |1+
+      // Résumé : Filtre la liste des produits
+      // Syntaxe :
+      //Filtre (<sFiltre> est chaîne)
+      //
+      // Paramètres :
+      //	sFiltre (chaîne ANSI) : Filtre
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Filtre(sFiltre est une chaine)
+      
+      // Si aucune filtre n'est précisé, ne rien faire
+      si sFiltre = "" alors retour
+      
+      pclProduit	est un mproduit dynamique
+      
+      // Parcourt le tableau des produits (depuis la fin)
+      pour TOUT pclProduit, nIndice DE m_tabProduits depuisfin
+      	
+      	// Si le libellé ou la référence du produit ne contient pas la chaîne de filtre
+      	si Contient(pclProduit.m_sLibellé, sFiltre, SansCasse) = faux _et_ contient(pclProduit.m_sRéférence, sFiltre, SansCasse) = faux alors
+      		// Supprime le produit
+      		TableauSupprime(m_tabProduits, nIndice)
+      	FIN
+      	
+      FIN
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970e3d6af4
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

@@ -1,0 +1,326 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : WD Découverte MVP - Partie 2
+ major_version : 28
+ minor_version : 0
+ type : 4097
+ description : ""
+ subtype : 0
+project :
+ identifier : 0x0
+ internal_properties : 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
+ configurations :
+  -
+    name : Exécutable Windows 32 bits
+    internal_properties : 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
+    configuration_id : 526984423900472696
+    type : 1
+    generation_directory : .\Exe
+    generation_name : WD Découverte MVP - Partie 2.exe
+    version :
+     major_version : 21
+     generation_version : 1
+     internal_generation_version : 2
+    icon_filename : .\icone.ico
+    language : 1
+ elements :
+  identifier : 0x443269f30002f7c3
+  elements :
+   -
+     name : MClient
+     identifier : 0x44326cc00042e81e
+     internal_properties : CAAAAAgAAACoppCMO2BIUxzO7pIrSOV9NKvDK6N//UaDUi1g5TrSJtYINrKDhZvxOePd21uVbWOttQ==
+     physical_name : .\MClient.wdc
+     type : 4
+   -
+     name : MTableauDeClients
+     identifier : 0x4433a3390028b375
+     internal_properties : CAAAAAgAAABLx7NXVBEZwo0wDM7O0TubYWx46HxIWTJDwpXA51i6NoJOKYqfoajH6lROqmpmEoZO1g==
+     physical_name : .\MTableauDeClients.wdc
+     type : 4
+   -
+     name : PTableClient
+     identifier : 0x44329d8d00248953
+     internal_properties : CAAAAAgAAAAyCGq+jfqy7cpotY1/nvb+YgUxYV3xromraFV48Q6Gqq5cO16xTy6Xk413QcE/O60XHw==
+     physical_name : .\PTableClient.wdc
+     type : 4
+   -
+     name : PFicheClient
+     identifier : 0x44326d4d00440d9d
+     internal_properties : CAAAAAgAAADmbM7S0Y6mSRb00bmrGubsLr0lra1RfSKblPtSZ6j07NQegwolk4rjL+nTLfXrlwnzcw==
+     physical_name : .\PFicheClient.wdc
+     type : 4
+   -
+     name : FEN_Table_Client
+     identifier : 0x4433a639002a6c11
+     internal_properties : CAAAAAgAAAC2nJ6CIR4WGSaFhBOtelsGBFUTO52Rqoqg29j9yFfFAw0VOCQFM1Zcf7kjnWWbZ1mjow==
+     physical_name : .\FEN_Table_Client.wdw
+     type : 2
+   -
+     name : FEN_Fiche_Client
+     identifier : 0x44339f3c00262056
+     internal_properties : CAAAAAgAAABt6UVZZtNbBNOCnmNYcZD4qwj27tC0MvaYlQ5PlGsrNY8BFxkOMkpdfKYQ6KhYIJB4+A==
+     physical_name : .\FEN_Fiche_Client.wdw
+     type : 2
+   -
+     name : CGestionErreur
+     identifier : 0x443405c80063b24c
+     internal_properties : CAAAAAgAAABt6UVZZtNbBNODZiXwJpTwidoktPJeyQanXSZvaIeXoR+dTdWTbbtefKYQ6KhYIJB4+A==
+     physical_name : .\CGestionErreur.wdc
+     type : 4
+   -
+     name : PTableCommande
+     identifier : 0x443e2667027c4105
+     internal_properties : CAAAAAgAAACd+fWpFkPr9EPNM4Sk2R272YSQQIRI59Sjaml0c7zWWv4CJZzRcTbwLBaAeDioUECIiA==
+     physical_name : .\PTableCommande.wdc
+     type : 4
+   -
+     name : MCommande
+     identifier : 0x443e2099027a9261
+     internal_properties : CAAAAAgAAAAIBnAsm8Boc3z6WrNtEA3uyL8XnyfDXiGcXBFMaaZuYlKs9Z3s1hMdGQP9+7s1zcMNFQ==
+     physical_name : .\MCommande.wdc
+     type : 4
+   -
+     name : FEN_Fiche_Commande
+     identifier : 0x443e3113006cf191
+     internal_properties : CAAAAAgAAAB51aHlwr/3+EfxMqA0YwX3ZcawYF4ySLioYX4X0C9nSY990i9Oqjn0IBqEfAT8hHRc5A==
+     physical_name : .\FEN_Fiche_Commande.wdw
+     type : 2
+   -
+     name : MLigneCommande
+     identifier : 0x443e37ff009bfb61
+     internal_properties : CAAAAAgAAAAJBXEVks9nCNeBqMyYnlvHHUwUPJyQfl2k/p8+iZaEvETMtzRgWNdEcKoU7LQs1MQMFA==
+     physical_name : .\MLigneCommande.wdc
+     type : 4
+   -
+     name : FEN_Table_Commande
+     identifier : 0x443e2cae005ec4f6
+     internal_properties : CAAAAAgAAAAeBHYqmcZuAc5IsGYhOs8fJonlNYHlitpEhnEkJfoS9trAekoTNcl3p5EL9b0zz8ELCw==
+     physical_name : .\FEN_Table_Commande.wdw
+     type : 2
+   -
+     name : PFicheCommande
+     identifier : 0x443e2bc5005037b8
+     internal_properties : CAAAAAgAAAD8WtTA/6QMHyiGged1+BpxemsBaWO/dDxYreqjJvmTZZdPqQ4xl55Jda8plx/RqR/paQ==
+     physical_name : .\PFicheCommande.wdc
+     type : 4
+   -
+     name : MTableauDeCommandes
+     identifier : 0x443e2b4c00485f9d
+     internal_properties : CAAAAAgAAACEguzI96wEJzC+qRZNiATUyquBGcM/VOxYRRJ7rpF7Xb8ndnnSNrZhXccxjxfJsSeRkQ==
+     physical_name : .\MTableauDeCommandes.wdc
+     type : 4
+   -
+     name : MTableauDeLigneCommande
+     identifier : 0x443e68f401003a3e
+     internal_properties : CAAAAAgAAAB+5FZKeSaOoa7oLHSJjLFXmskhyQlVvXeENmMqr0BU5NTObN4R7xUXBzGrFZ1TL6Fr6w==
+     physical_name : .\MTableauDeLigneCommande.wdc
+     type : 4
+   -
+     name : MTableauDeProduits
+     identifier : 0x443f7b59008491de
+     internal_properties : CAAAAAgAAAAEAmxIdyyEp7A/c+XFVM7JIEf/599jvCOcvN34fZICzmaYBgt0jM3q3UexD5dJMacREQ==
+     physical_name : .\MTableauDeProduits.wdc
+     type : 4
+   -
+     name : PRechercheProduit
+     identifier : 0x443f7b3500820424
+     internal_properties : CAAAAAgAAADnY8/T0I2lRhHAAO5C37xuGxpSSpKOlBOMUAmMv2Aqzk72LGgb7dj3LujSLvbqlgrycg==
+     physical_name : .\PRechercheProduit.wdc
+     type : 4
+   -
+     name : MProduit
+     identifier : 0x443f7a17007ba704
+     internal_properties : CAAAAAgAAACSaMre7VrSjaoFVLWZ/9Z5HlG9zRnNqTqzhjGkNfqSphqQUEcjJbLM8y2XYSHfmw33fw==
+     physical_name : .\MProduit.wdc
+     type : 4
+   -
+     name : ETAT_Table_Commande
+     identifier : 0x446f6d8402773709
+     internal_properties : CAAAAAgAAAD9WdXJ9qMLFCPe9Ps+thNj3Zhk9MhEwAxEovGsO8TWYl5SuQ5qkHTJjLYgmBjIsCDoaA==
+     physical_name : .\ETAT_Table_Commande.wde
+     type : 3
+   -
+     name : MBase
+     identifier : 0x444782b400626255
+     internal_properties : CAAAAAgAAAAvKwcbqNVdDtmA78mYXbhlT9xKgjT4bFOvE5ozAA8PiXO9+mj/wTNXdqAa5q4i3tI6Og==
+     physical_name : .\MBase.wdc
+     type : 4
+   -
+     name : FEN_Accueil
+     identifier : 0x446f697a02616efa
+     internal_properties : CAAAAAgAAADgXtjE41jQi1RzteJ30blvrtOtfVP/6HSAs+zpaIcV8wEtrUEv05f+8SuVYyPdpRvlbQ==
+     physical_name : .\FEN_Accueil.wdw
+     type : 2
+   -
+     name : FEN_Recherche_Produit
+     identifier : 0x443f7b04008045b6
+     internal_properties : CAAAAAgAAABi2FpOfSqCnboVJdbbphYlkNFfxwnFPh6gC6A9aNe9I+XNxQBzVX8cAz2nEZFPK51n7w==
+     physical_name : .\FEN_Recherche_Produit.wdw
+     type : 2
+   -
+     name : REQ_CommandesClient
+     identifier : 0x4473013b00930f1e
+     internal_properties : CAAAAAgAAAABfXmtGkfvgE8+LMbARrXWCQgAWP2AGFZKrIB5juasbKx05LvFO5BJKBKMdDy0TLwEDA==
+     physical_name : .\REQ_CommandesClient.WDR
+     type : 5
+   -
+     name : REQ_Produits
+     identifier : 0x447300f40091f9ca
+     internal_properties : CAAAAAgAAAAFd7Pf2KWNt54MUQEZ9kkKXYN8/uxsKf0RBa32TXEQ2pi20M3Kb5wveyCr1P8bpA8A
+     physical_name : .\REQ_Produits.WDR
+     type : 5
+   -
+     name : REQ_Clients
+     identifier : 0x44730030008ffb40
+     internal_properties : CAAAAAgAAADWvD5iQT52ecalXgKJQxhfOFUHrxp9Lu6KfKKmz9W/cYebgYoA+Ej8n5kD/YV7B/nDQw==
+     physical_name : .\REQ_Clients.WDR
+     type : 5
+   -
+     name : TEST_Accueil
+     identifier : 0x4473465d00841dd3
+     internal_properties : CAAAAAgAAABLx7NXVBEZwo1wn86EC3kJHWpgQHJOUiqQn9SBJhl9c0WfUls6zh8H6lROqmpmEoZO1g==
+     physical_name : .\TEST_Accueil.wxt
+     type : 17
+   -
+     name : ETAT_Fiche_Commande
+     identifier : 0x447352c601a2cb3a
+     internal_properties : CAAAAAgAAADMSiRwz/S87/ibaq7sIOiJeDknvwFloDygizShpHuZpwHxZea/egw2xX95R88B+e/ZWQ==
+     physical_name : .\ETAT_Fiche_Commande.wde
+     type : 3
+  other_elements : []
+  analysis : .\WD Découverte MVP - Partie 2.ana\WD Découverte MVP - Partie 2.wda
+  uml_model : .\Modèle classe MVP.uml
+  net_assemblies : []
+  uwp_api : []
+  external_components : []
+  internal_components : []
+ report_and_queries_enabled : false
+ common_generation_directory : true
+ languages :
+  - fr-FR
+ wb_style_sheet : .\MVP.wws
+ rad_options :
+  internal_properties : CAAAAAgAAAB7I6Zl+vcZZkpNF9EdL2G02v4l/kl5hsdQ8nEhjEZFI8AHA1LwT6GfYbswYpdfUiW4Rc1XR3LhJJZwmzA=
+ code_elements :
+  internal_properties : CAAAAAgAAADJ72MGoM+Jk5HDZT/Nj8eo/0i5dC1/dXybF0UHmjD47YM2p1fdESH1VG/1gIVXRZFW38Hb5OZp1pJDKecdiIaF
+  type_code : 0
+  p_codes :
+   -
+     code : |1-
+      
+     type : 196608
+   -
+     type : 196621
+   -
+     type : 196627
+     enabled : false
+  orphans :
+   -
+     name : Exécutable Windows 32 bits
+     identifier : 0x443269f30003f7c3
+     code_elements :
+      type_code : 159
+      p_codes : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : MVP
+rad :
+ internal_properties : CAAAAAgAAABhIL0UXeZmxDJxY3Xy0Q==
+project_explorer :
+ explorer_type : project
+ children :
+  -
+    explorer_type : windows
+    children :
+     -
+       name : Fiche Client
+       explorer_type : custom_folder
+       children :
+        -
+          name : FEN_Fiche_Client
+          explorer_type : element
+          type : 2
+        -
+          name : PFicheClient
+          explorer_type : element
+          type : 4
+     -
+       name : Table Client
+       explorer_type : custom_folder
+       children :
+        -
+          name : FEN_Table_Client
+          explorer_type : element
+          type : 2
+        -
+          name : PTableClient
+          explorer_type : element
+          type : 4
+        -
+          name : MTableauDeClients
+          explorer_type : element
+          type : 4
+        -
+          name : REQ_Clients
+          explorer_type : element
+          type : 5
+     -
+       name : Fiche Commande
+       explorer_type : custom_folder
+       children :
+        -
+          name : FEN_Fiche_Commande
+          explorer_type : element
+          type : 2
+        -
+          name : PFicheCommande
+          explorer_type : element
+          type : 4
+     -
+       name : Table Commande
+       explorer_type : custom_folder
+       children :
+        -
+          name : FEN_Table_Commande
+          explorer_type : element
+          type : 2
+        -
+          name : MTableauDeCommandes
+          explorer_type : element
+          type : 4
+        -
+          name : PTableCommande
+          explorer_type : element
+          type : 4
+        -
+          name : REQ_CommandesClient
+          explorer_type : element
+          type : 5
+     -
+       name : Recherche Produit
+       explorer_type : custom_folder
+       children :
+        -
+          name : FEN_Recherche_Produit
+          explorer_type : element
+          type : 2
+        -
+          name : PRechercheProduit
+          explorer_type : element
+          type : 4
+        -
+          name : MTableauDeProduits
+          explorer_type : element
+          type : 4
+        -
+          name : REQ_Produits
+          explorer_type : element
+          type : 5
+resources :
+ string_res :
+  identifier : 0x0
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAAAd98VSJfHHqE3P0QHwrwdhn7ig8dWBR6valpUTgnAMTVXiDg==

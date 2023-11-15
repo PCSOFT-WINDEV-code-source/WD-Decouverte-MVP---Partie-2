@@ -1,0 +1,98 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MLigneCommande
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x143e37ff02e1faf4
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      MLigneCommande est une Classe
+      	// Le modèle LigneCommande hérite du modèle de base
+      	herite de mbase
+      
+      	// Une ligne de commande est liée à une commande
+      	m_pclCommande	est un MCommande dynamique	<faible>
+      
+      	// Rubriques gérées
+      	m_sRéférence 	est une chaine		<mapping=Référence>
+      	m_sLibellé		est une chaine		<mapping=Libellé>
+      	m_nQuantité		est un entier		<mapping=Quantité>
+      	m_moPrix		est un monetaire	<mapping=Prix>
+      	m_moTotal		est un monétaire 	<mapping=Total>
+      
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1458664897719237364
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(pclCommande est un MCommande dynamique)
+      
+      // Appelle le constructeur du modèle de base
+      constructeur mbase(LigneCommande..nom, lignecommande.IDLigneCommande..nom)
+      
+      // Mémorise la commande
+      m_pclCommande = pclCommande
+     type : 589824
+   -
+     name : Constructeur
+     procedure_id : 1458664897719237364
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructeur()
+      
+      // Appelle le constructeur du modèle de base
+      Constructeur MBase(LigneCommande..nom, LigneCommande.IDLigneCommande..Nom)
+     type : 589825
+   -
+     name : Destructeur
+     procedure_id : 1458664897719302900
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : MémoireVersFichier
+     internal_properties : CAAAAAgAAAATrJ/OnB8j9o/7P7FEuGrBVELwgG2vO69rRZWOsv/YPRmCsJioUwcKi05sJDNJqX4qcweAGw2dyjDB2hFoceUhKKj0oCGL4x6B3Cs/iImxIIl0RSiIpcEV7m8lOSQ513GN3YjYe0EQUbN4OXE8AM7WY4NS3uq+pshbpOaSXOqEPBWNO7G/FTbyG0y3KtnLFIXMC8goWgdC+TeKkpKVtmIsavvUbHSY8rfO1sXc7Nh+e8MAbo7M6bOXz47XYWKERTDHtzgDw5sSeRqVy0MNYbNkS/sZL5SB1z8eG7wYS6ngws6aicmiwAIT
+     procedure_id : 1461367063503344508
+     type_code : 12
+     code : |1-
+      // Résumé : Initialise automatiquement les rubriques de l'enregistrement avec la valeur des membres
+      // Syntaxe :
+      // MémoireVersFichier ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE MémoireVersFichier()
+      
+      // Appelle la méthode MémoireVersFichier de MBase
+      ancetre.memoireversfichier()
+      
+      // Mémorise l'identifiant de commande
+      LigneCommande.IDCommande = m_pclCommande.m_vID
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970e2f6ae5
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

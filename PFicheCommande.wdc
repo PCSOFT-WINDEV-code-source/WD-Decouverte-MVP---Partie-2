@@ -1,0 +1,194 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : PFicheCommande
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x143e2bc500fd3779
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      PFicheCommande est une Classe
+      
+      protege
+      	m_clCommandeCourant est un mCommande <associe>	// modèle associé à cette présentation (toujours en phase avec l'interface)
+      	m_pclCommandeSource est un MCommande dynamique	// modèle source (avant modification) associé à cette présentation
+      	
+      	m_pValidation est une procédure	// Procédure à exécuter en validation d'un enregistrement
+      	
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1458651454439831417
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(pclCommande est un mCommande dynamique, pValidation est une procédure = null)
+      
+      // Constructeur du modèle
+      constructeur m_clCommandeCourant(pclCommande)
+      // Mémorise la commande d'origine
+      m_pclCommandeSource <- pclCommande
+      // Mémorise la procédure de validation
+      m_pValidation = pValidation
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1458651454439896953
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : ValideModification
+     procedure_id : 1458651454439962489
+     type_code : 12
+     code : |1+
+      // Résumé : Valide les modifications de la fiche commande
+      // Syntaxe :
+      //[ <Résultat> = ] ValideModification ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	booléen : Vrai si la modification est effective, Faux autrement
+      //
+      PROCEDURE ValideModification() : booleen
+      
+      clErreur est un CGestionErreur
+      pclMémorisation est un mcommande(m_pclCommandeSource)
+      
+      
+      // Définit la commande source
+      m_pclCommandeSource.Copier(m_clCommandeCourant)
+      
+      // Enregistre la commande
+      si pas m_pclCommandeSource.bEnregistrer(clErreur) alors
+      	ErreurDéclenche(1, clErreur.FormateMessage())
+      	// Repositionne la source
+      	m_pclCommandeSource.copier(pclMémorisation)
+      	RENVOYER Faux
+      FIN
+      
+      // Exécute la procédure de validation si elle est définie
+      SI m_pValidation <> Null ALORS m_pValidation(m_pclCommandeSource)
+      
+      RENVOYER Vrai
+      
+     type : 458752
+   -
+     name : NouvelleLigne
+     procedure_id : 1459033191175155134
+     type_code : 12
+     code : |1+
+      // Résumé : Demande d'ajout d'une nouvelle ligne
+      // Syntaxe :
+      //[ <Résultat> = ] NouvelleLigne ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	PTableProduit : Table des produits
+      //
+      PROCEDURE NouvelleLigne()
+      
+      // Charge le tableau des produits disponibles
+      clTabProduit est un MTableauDeProduits
+      clTabProduit.Charge()
+      
+      // Définit la présentation pour la table des produits
+      // Si un produit est choisi, la procédure NotifAjout sera appelée
+      clPresentation est un PRechercheProduit(clTabProduit, NotifAjout)
+      
+      // Renvoie la présentation
+      renvoyer clPresentation
+     type : 458752
+   -
+     name : NotifAjout
+     procedure_id : 1459033530477584607
+     type_code : 12
+     code : |1+
+      // Résumé : Procédure appelée lorsqu'un produit est choisi pour une nouvelle ligne de commande
+      // Syntaxe :
+      // NotifAjout (<pclProduit> est MProduit dynamique)
+      //
+      // Paramètres :
+      //	pclProduit (MProduit dynamique) : Produit référencé dans la nouvelle ligne de commande
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE NotifAjout(pclProduit est un MProduit dynamique)
+      
+      // Ajoute une ligne de commande avec le produit demandé
+      m_clTableauLigneCommande.NouvelleLigne(pclProduit)
+      
+      // Recalcule le total de la commande
+      CalculeTotal()
+     type : 458752
+   -
+     name : ModifQuantité
+     procedure_id : 1459099642891731290
+     type_code : 12
+     code : |1+
+      // Résumé : Procédure appelée lorsqu'une modification de quantité est demandée pour une ligne de commande
+      // Syntaxe :
+      // ModifQuantité (<pclLigneCmd> est MLigneCommande dynamique, <nQuantité> est entier)
+      //
+      // Paramètres :
+      //	pclLigneCmd (MLigneCommande dynamique) : Ligne de commande à modifier
+      //	nQuantité (entier) : Nouvelle quantité
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE ModifQuantité(pclLigneCmd est un MLigneCommande dynamique, nQuantité est un entier)
+      
+      // Modifie la quantité pour la ligne de commande
+      pclLigneCmd.m_nQuantité = nQuantité
+      pclLigneCmd.m_moTotal = nQuantité * pclLigneCmd.m_moPrix
+      
+      // Recalcule le total de la commande
+      calculetotal()
+     type : 458752
+  properties :
+   -
+     name : p_NbArticle
+     identifier : 0x143fc1ba026e7d62
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         
+        type : 1966080
+     template_refs : []
+   -
+     name : NomEnClair
+     identifier : 0x1444e933028abccf
+     type_code : 103
+     p_codes :
+      -
+        code : |1+
+         PROCEDURE PUBLIQUE NomEnClair()
+         
+         // Renvoie le nom en clair de la commande
+         renvoyer chaineconstruit("Commande n°%1 de %2", m_clCommandeCourant.m_nNuméroInterneCommande, m_clCommandeCourant.m_pclClient.NomEnClair)
+        type : 1966080
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970e4e6b04
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

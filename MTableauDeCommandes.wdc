@@ -1,0 +1,167 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MTableauDeCommandes
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x143e2b4c00965f5e
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      MTableauDeCommandes est une Classe
+      
+      public
+      	m_pclClient 	est un MClient dynamique	<faible>	// Client des commandes
+      	m_tabCommandes est un tableau de MCommande dynamique	// Tableau de commandes
+      
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1458650934742048606
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(pclClient est un mclient dynamique)
+      
+      // Mémorise le client
+      m_pclClient = pclClient
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1458650934742114142
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : Charger
+     procedure_id : 1458650934742179678
+     type_code : 12
+     code : |1+
+      // Résumé : Charge le tableau des commandes
+      // Syntaxe :
+      // Charger ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Charger()
+      
+      // Vide le tableau
+      SupprimeTout(m_tabCommandes)
+      
+      // Paramètre la requête
+      REQ_CommandesClient.pidclient = m_pclclient.m_vid
+      
+      // Exécute la requête
+      SI HExécuteRequête(REQ_CommandesClient) ALORS
+      	
+      	// Parcourt la liste des commandes	
+      	POUR TOUT REQ_CommandesClient
+      		
+      		// Charge la commande dans un modèle
+      		clCommande est un mCommande(m_pclClient)
+      		clCommande.Charger(REQ_CommandesClient..nom)
+      		
+      		// Ajoute la commande au tableau
+      		TableauAjoute(m_tabCommandes,clCommande)
+      		
+      	FIN
+      	
+      FIN
+     type : 458752
+   -
+     name : Ajouter
+     procedure_id : 1458650934742245214
+     type_code : 12
+     code : |1+
+      // Résumé : Ajoute une commande au tableau
+      // Syntaxe :
+      //Ajouter (<pclCommande> est MCommande dynamique)
+      //
+      // Paramètres :
+      //	pclCommande (MCommande dynamique) : Commande à ajouter
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Ajouter(pclCommande est un mCommande dynamique)
+      
+      // Ajoute la commande au tableau
+      Ajoute(m_tabCommandes, pclCommande)
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1458650934742310750
+     type_code : 12
+     code : |1-
+      // Résumé : Supprime une commande
+      // Syntaxe :
+      //[ <Résultat> = ] bSupprimer (<pclCommande> est MCommande dynamique, <clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	pclCommande (MCommande dynamique) : Commande à supprimer du tableau
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	Type indéterminé : Vrai si la suppression est effective, Faux autrement
+      //
+      PROCEDURE bSupprimer(pclCommande est un mCommande dynamique, clErreur est un CGestionErreur)
+      
+      // Recherche la commande dans le tableau
+      nPosition est un entier = Cherche(m_tabCommandes, tcLinéaire, pclCommande)
+      si nPosition=-1 alors
+      	// Commande non trouvée
+      	clErreur.Initialise(CGestionErreur.NonTrouvé)
+      	renvoyer faux
+      FIN
+      
+      // Supprime la commande
+      soit bCommandeSupprimée = pclCommande.bSupprimer(clErreur)
+      
+      // Supprime la commande du tableau
+      si bCommandeSupprimée alors Supprime(m_tabCommandes, nPosition)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+      
+      RENVOYER bCommandeSupprimée
+     type : 458752
+   -
+     name : Modifier
+     procedure_id : 1458650934742376286
+     type_code : 12
+     code : |1-
+      // Résumé : Modifie une commande
+      // Syntaxe :
+      //Modifier (<pclCommande> est MCommande dynamique)
+      //
+      // Paramètres :
+      //	pclCommande (MCommande dynamique) : Commande modifiée
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Modifier(pclCommande est un mCommande dynamique <utile>)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970e5e6b14
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

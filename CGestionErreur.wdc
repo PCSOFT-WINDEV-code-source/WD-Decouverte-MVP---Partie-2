@@ -1,0 +1,132 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : CGestionErreur
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x146ca8b6010208d6
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1-
+      // Type d'erreur
+      CodeErreur est une Enumération
+      	Aucune		// Aucune erreur
+      	NonTrouvé	// Erreur de type "enregistrement non trouvé"
+      	ErreurHFSQL	// Erreur HFSQL
+      FIN
+      
+      CGestionErreur est une Classe
+      	
+      protege
+      	m_eCode		est une codeerreur	// Code de l'erreur
+      	m_sTexte 	est une chaine		// Texte descriptif de l'erreur
+      	
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1471736677897865430
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur()
+      
+      // Par défaut, aucune erreur
+      m_eCode = aucune
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1471736677897930966
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+     type : 655360
+   -
+     name : Initialise
+     procedure_id : 1471736677897996502
+     type_code : 12
+     code : |1-
+      // Résumé : Initialise une erreur
+      // Syntaxe :
+      //Initialise (<eCodeErreur> est énumération [, <sTexte> est chaîne])
+      //
+      // Paramètres :
+      //	eCodeErreur (énumération) : Code de l'erreur
+      //	sTexte (chaîne ANSI - valeur par défaut="") : Descriptif de l'erreur si nécessaire
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Initialise(eCodeErreur est un CodeErreur, sTexte est une chaine = "")
+      
+      // Mémorise le code et le texte de l'erreur
+      m_eCode = eCodeErreur
+      m_sTexte = sTexte
+      
+      // Si l'erreur est une erreur HFSQL et qu'aucun descriptif n'est mentionné
+      si eCodeErreur = ErreurHFSQL _et_ sTexte = "" alors
+      	// Récupère automatiquement le détails de l'erreur HFSQL
+      	m_sTexte = herreurinfo()
+      FIN
+     type : 458752
+   -
+     name : FormateMessage
+     procedure_id : 1471736677898062038
+     type_code : 12
+     code : |1+
+      // Résumé : Formate le message d'erreur
+      // Syntaxe :
+      //[ <Résultat> = ] FormateMessage ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne ANSI : Texte de l'erreur en clair
+      //
+      PROCEDURE FormateMessage() : chaine
+      
+      // Si  aucune erreur, renvoie une chaîne vide
+      si m_eCode = Aucune alors renvoyer ""
+      
+      // Si un texte descriptif est indiqué, renvoie ce texte
+      si m_sTexte <> "" alors renvoyer m_sTexte
+      
+      // Renvoi un message selon le code de l'erreur
+      selon m_eCode
+      	// Enregistrement non trouvé
+      	cas NonTrouvé:		renvoyer "Enregistrement non trouvé dans la base de données."
+      	// Erreur HFSQL
+      	cas ErreurHFSQL:	renvoyer "Erreur base de données."
+      	// Autres cas
+      	AUTRE CAS:			RENVOYER "<erreur inconnue>"
+      FIN
+     type : 458752
+  properties :
+   -
+     name : Code
+     identifier : 0x146cae460558c581
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE PUBLIQUE Code()
+         
+         RENVOYER m_eCode
+        type : 1966080
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970dec6aa6
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

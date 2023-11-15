@@ -1,0 +1,196 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : PTableClient
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x14329d8b000f7fed
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1-
+      PTableClient est une Classe
+      
+      protege
+      	m_pclClients 		est un MTableauDeClients dynamique <associé>	// modèle associé à cette présentation (toujours en phase avec l'interface)
+      	m_pclClientCourant 	est un mclient dynamique						// client en cours dans la table (sélectionné)
+      	
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1455398849921187821
+     type_code : 27
+     code : |1-
+      PROCEDURE Constructeur(clTabClient est un MTableauDeClients dynamique)
+      
+      // Mémorise le tableau des clients
+      m_pclClients = clTabClient
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1455398849921253357
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+     type : 655360
+   -
+     name : Nouveau
+     procedure_id : 1455399854943638560
+     type_code : 12
+     code : |1-
+      // Résumé : Définit un client à ajouter
+      // Syntaxe :
+      // [ <Résultat> = ] Nouveau ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	PFicheClient : Client à ajouter
+      //
+      PROCEDURE Nouveau() : PFicheClient
+      
+      clClient	est un mclient()
+      clPFiche	est un PFicheClient(clClient, NotifAjout)	// Si l'ajout est effectif, la procédure NotifAjout sera exécutée
+      
+      renvoyer clPFiche
+     type : 458752
+   -
+     name : Modifier
+     procedure_id : 1455684323512727443
+     type_code : 12
+     code : |1-
+      // Résumé : Définit le client à modifier
+      // Syntaxe :
+      // [ <Résultat> = ] Modifier ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	PFicheClient : Client à modifier
+      //
+      PROCEDURE Modifier() : PFicheClient
+      
+      clPFiche	est un PFicheClient(clientcourant, NotifModif)	// Si la modification est effective, la procédure NotifModif sera exécutée
+      
+      renvoyer clPFiche
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1455685302765368421
+     type_code : 12
+     code : |1+
+      // Résumé : Supprime un client
+      // Syntaxe :
+      // [ <Résultat> = ] bSupprimer (<clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si le client est supprimé, Faux autrement
+      //
+      PROCEDURE bSupprimer(clErreur est un CGestionErreur) : booleen
+      
+      renvoyer m_pclClients.bsupprimer(clientcourant, clErreur)
+     type : 458752
+   -
+     name : NotifAjout
+     procedure_id : 1458386515075789208
+     type_code : 12
+     code : |1+
+      // Résumé : Procédure appelée si l'ajout d'un client est effectif
+      // Syntaxe :
+      // NotifAjout (<pclClient> est MClient dynamique)
+      //
+      // Paramètres :
+      //	pclClient (MClient dynamique) : Client qui vient d'être ajouté
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE NotifAjout(pclClient est un mclient dynamique)
+      
+      // Ajoute le client au tableau
+      m_pclClients.Ajouter(pclClient)
+     type : 458752
+   -
+     name : NotifModif
+     procedure_id : 1458386648219806915
+     type_code : 12
+     code : |1-
+      // Résumé :  Procédure appelée si la modification d'un client est effective
+      // Syntaxe :
+      // NotifModif (<pclClient> est MClient dynamique)
+      //
+      // Paramètres :
+      //	pclClient (MClient dynamique) : Client qui vient d'être modifié
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE NotifModif(pclClient est un mclient dynamique <utile>)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+  properties :
+   -
+     name : ClientCourant
+     identifier : 0x143d213900b9013e
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE PUBLIQUE ClientCourant() : MClient
+         
+         // Renvoie le client en cours
+         RENVOYER m_pclClientCourant
+        type : 1966080
+      -
+        code : |1-
+         PROCEDURE PUBLIQUE ClientCourant(Valeur est MClient dynamique)
+         
+         // Définit le client en cours
+         m_pclClientCourant = Valeur
+        type : 2031616
+     template_refs : []
+   -
+     name : TotalClient
+     identifier : 0x143d407e00862762
+     type_code : 103
+     p_codes :
+      -
+        code : |1+
+         PROCEDURE PUBLIQUE TotalClient() : entier
+         
+         // Renvoie le nombre de client de la table
+         renvoyer m_tabClients..occurrence
+        type : 1966080
+     template_refs : []
+   -
+     name : NomPrénomCourant
+     identifier : 0x146dd3a303cd1180
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE PUBLIQUE NomPrénomCourant() : chaine
+         
+         RENVOYER clientcourant.m_sNom +[" "]+ ClientCourant.m_sprenom
+        type : 1966080
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970db36a68
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

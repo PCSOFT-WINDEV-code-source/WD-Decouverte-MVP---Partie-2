@@ -1,0 +1,337 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : MCommande
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x143e209601f288ad
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      MCommande est une Classe
+      	// Le modèle Commande hérite du modèle de base
+      	herite de mbase
+      	
+      	// Une commande est liée à un client
+      	m_pclClient					est un mclient dynamique	<faible>
+      	
+      	// Une commande possède des lignes de commande
+      	m_clTableauLigneCommande	est un MTableauDeLigneCommande
+      	
+      	// Rubriques gérées
+      	m_nNuméroInterneCommande	est un entier sur 8			<mapping=NuméroInterneCommande>
+      	m_dDateCommande				est une date				<mapping=Date>
+      	m_moTotal					est un monétaire			<mapping=Total>
+      	m_sObservations 			est une chaine 				<mapping=Observations>
+      	
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1458639157964540077
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructeur(pclClient est un mclient dynamique)
+      
+      // Appelle le constructeur du modèle de base
+      constructeur mbase(Commande..nom, commande.IDCommande..Nom)
+      // Appelle le constructeur du tableau des lignes de commandes
+      constructeur m_clTableauLigneCommande(objet)
+      
+      // Mémorise le client
+      m_pclClient = pclClient
+     type : 589824
+   -
+     name : Constructeur
+     procedure_id : 1458639157964540077
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructeur(pclCommande est un MCommande dynamique)
+      
+      // Appelle le constructeur du modèle de base
+      Constructeur MBase(Commande..nom, Commande.IDCommande..Nom)
+      // Appelle le constructeur du tableau des lignes de commandes
+      constructeur m_clTableauLigneCommande(objet)
+      
+      // Recopie la commande
+      copierInitial(pclCommande)
+     type : 589825
+   -
+     name : Destructeur
+     procedure_id : 1458639157964605613
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : bEnregistrer
+     procedure_id : 1458640171576927017
+     type_code : 12
+     code : |1-
+      // Résumé : Sauvegarde l'enregistrement en base
+      // Syntaxe :
+      //[ <Résultat> = ] bEnregistrer (<clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si l'enregistrement est effectif, Faux autrement
+      //
+      PROCEDURE bEnregistrer(clErreur est un CGestionErreur) : booleen
+      
+      // Appelle la méthode bEnregistrer de MBase
+      si Ancêtre.benregistrer(clErreur) = faux ALORS renvoyer faux
+      
+      // Enregistre les lignes de commandes
+      soit bEnregistré = m_clTableauLigneCommande.bEnregistrer(clErreur)
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+      
+      renvoyer bEnregistré
+     type : 458752
+   -
+     name : Charger
+     procedure_id : 1458644337695649614
+     type_code : 12
+     code : |1-
+      // Résumé : Charge les informations du modèle
+      // Syntaxe :
+      // Charger ( [<sdSource> est chaîne])
+      //
+      // Paramètres :
+      //	sdSource (chaîne ANSI) : Source à utiliser, chaîne vide ("") pour utiliser le fichier associé au modèle
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Charger(sdSource est une chaine = "")
+      
+      // Appelle la méthode Charge de MBase
+      Ancêtre.charger(sdSource)
+      
+      // Charge les informations des lignes de commande
+      m_clTableauLigneCommande.Charger()
+     type : 458752
+   -
+     name : GénèreNuméroInterneCommande
+     procedure_id : 1458785646421604867
+     type_code : 12
+     code : |1-
+      // Résumé : Génère le numéro de commande interne
+      // Syntaxe :
+      // [ <Résultat> = ] GénèreNuméroInterneCommande ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier : Numéro de commande interne
+      //
+      PROCEDURE PROTÉGÉE globale GénèreNuméroInterneCommande() : entier
+      
+      nNuméroGénéré est un entier
+      
+      // Mémorise la position courante dans le fichier
+      nPos est un entier = HSauvePosition(commande, hSauveRubriques)
+      
+      // Recherche le dernier numéro interne de commande
+      HLitDernier(Commande, NuméroInterneCommande)
+      si htrouve(commande) alors nNuméroGénéré = val(Commande.NuméroInterneCommande)
+      
+      // Incrémente ce numéro
+      nNuméroGénéré++
+      
+      // Repositionne le fichier
+      HRetourPosition(nPos)
+      
+      renvoyer nNuméroGénéré
+     type : 458752
+   -
+     name : Copier
+     procedure_id : 1459107554241551749
+     type_code : 12
+     code : |1+
+      // Résumé : Copie une commande dans la commande en cours
+      // Syntaxe :
+      // Copier (<pclBase> est MBase dynamique)
+      //
+      // Paramètres :
+      //	pclCommande (MCommande dynamique) : Commande à recopier
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE Copier(pclCommande est un MCommande dynamique) <redéfinition>
+      
+      // Copie l'objet
+      Ancêtre.Copier(pclCommande)
+      m_pclClient = pclCommande.m_pclClient
+      m_nNuméroInterneCommande = pclCommande.m_nNuméroInterneCommande
+      m_dDateCommande = pclCommande.m_dDateCommande
+      m_moTotal = pclCommande.m_moTotal
+      m_sObservations = pclCommande.m_sObservations
+      
+      // Copie les lignes de commandes
+      m_clTableauLigneCommande.Copier(pclCommande.m_clTableauLigneCommande)
+     type : 458752
+   -
+     name : bSupprimerLigne
+     procedure_id : 1459110921501938489
+     type_code : 12
+     code : |1-
+      // Résumé : Supprime une ligne de commande
+      // Syntaxe :
+      //[ <Résultat> = ] bSupprimerLigne (<pclLigneCmd> est MLigneCommande dynamique, <clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	pclLigneCmd (MLigneCommande dynamique) : Ligne de commande à supprimer
+      //	clErreur (CGestionErreur) : Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si la suppression est effective, Faux autrement
+      //
+      PROCEDURE bSupprimerLigne(pclLigneCmd est un MLigneCommande dynamique, clErreur est un CGestionErreur) : booleen
+      
+      // Supprime la ligne de commande du tableau des lignes de commande
+      soit bSupprimé = m_clTableauLigneCommande.bSupprimer(pclLigneCmd, clErreur)
+      
+      // Si la suppression de la ligne est effective, calcule le nouveau total de la commande
+      si bSupprimé ALORS CalculeTotal()
+      
+      renvoyer bSupprimé
+     type : 458752
+   -
+     name : bSupprimer
+     procedure_id : 1463962744163293448
+     type_code : 12
+     code : |1+
+      // Résumé : Supprime l'enregistrement en cours
+      // Syntaxe :
+      // [ <Résultat> = ] bSupprimer (<clErreur> est CGestionErreur)
+      //
+      // Paramètres :
+      //	clErreur (CGestionErreur) :  Objet de gestion des erreurs
+      // Valeur de retour :
+      // 	booléen : Vrai si la suppression est effective, Faux autrement
+      //
+      PROCEDURE bSupprimer(clErreur est un CGestionErreur) : booleen
+      
+      // Supprime les lignes de commande
+      si pas m_clTableauLigneCommande.bSupprimer(clErreur) alors renvoyer faux
+      
+      // Appelle la méthode bSupprimer de MBase
+      renvoyer Ancêtre.bsupprimer(clErreur)
+      
+     type : 458752
+   -
+     name : MémoireVersFichier
+     internal_properties : CAAAAAgAAABvGNs/t1Ofynv3N1UgHL5BrGZ8hNFjT5tnuV3qzsM0BfEmtIQsP1tGZzLkcDdFdUYKz7sEl4EZxpRl8pVs1fkhwHTglFUHJ+JNQOMDpK0t0BHw6XTsGUWZmpMtNZhdg8lVqTwcRw3UJfdUgdVIVAoeg3e20hgoyL7pMmAQMiAmRuvbje9ll7BYkWJpeL+xTqeKQepmGGmsf7UIHEAbHJyO6HH+UhIavO38BPfqgp7Y1bl+4BxKYyV97WzZZxj6z5KF9SoBQQ2cvxAbvUmb7yU+YVHr3XIjoTUseR7+cZ/SNKz4S5pmBE7f
+     procedure_id : 1472492136983323071
+     type_code : 12
+     code : |1+
+      // Résumé : Initialise automatiquement les rubriques de l'enregistrement avec la valeur des membres
+      // Syntaxe :
+      //MémoireVersFichier ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE VIRTUELLE MémoireVersFichier()
+      
+      // Appelle la méthode de MBase
+      Ancêtre.MémoireVersFichier()
+      
+      // Positionne l'identifiant du client
+      Commande.IDClient = m_pclClient.m_vID
+      
+      // S'il s'agit d'un nouvel élément, génère un numéro de commande interne
+      SI m_bNouveau ALORS
+      	m_nNuméroInterneCommande = GénèreNuméroInterneCommande()
+      	Commande.NuméroInterneCommande = m_nNuméroInterneCommande
+      FIN
+     type : 458752
+   -
+     name : CalculeTotal
+     procedure_id : 1472498699713818794
+     type_code : 12
+     code : |1-
+      // Résumé : Calcule le total de la commande
+      // Syntaxe :
+      //CalculeTotal ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE CalculeTotal()
+      
+      // RAZ le total
+      m_moTotal = 0
+      
+      // Parcourt les lignes de commandes
+      pour tout element pclLigneDeCommande de m_clTableauLigneCommande.m_tabLignesCommande
+      	m_moTotal += pclLigneDeCommande.m_moTotal
+      FIN
+      
+      // Demande à effectuer la mise à jour des vues
+      DemandeMiseAJourUI()
+     type : 458752
+   -
+     name : CopierInitial
+     procedure_id : 1473540177776450048
+     type_code : 12
+     code : |1+
+      // Résumé : Copie une commande dans la commande en cours
+      // Syntaxe :
+      // CopierInitial (<pclBase> est MBase dynamique)
+      //
+      // Paramètres :
+      //	pclCommande (MCommande dynamique) : Commande à recopier
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE CopierInitial(pclCommande est un mcommande dynamique)
+      
+      copier(pclCommande)
+     type : 458752
+  properties :
+   -
+     name : NbArticles
+     identifier : 0x146cb1bd02a72fd6
+     type_code : 103
+     p_codes :
+      -
+        code : |1+
+         PROCEDURE PUBLIQUE NbArticles() : entier
+         
+         nNbArticle est un entier
+         
+         // Parcourt les lignes de commandes
+         POUR TOUT clLigne DE m_clTableauLigneCommande.m_tabLignesCommande
+         	// Incrémente le nombre d'article
+         	nNbArticle += clLigne.m_nQuantité
+         FIN
+         
+         // Renvoie le nombre d'article
+         RENVOYER nNbArticle
+        type : 1966080
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x1fc795970e136ac6
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
